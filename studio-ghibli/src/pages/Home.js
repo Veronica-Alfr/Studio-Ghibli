@@ -1,9 +1,9 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // import { Navigate, useNavigate } from "react-router-dom";
 import fetchFilms from '../actions/filmsAction';
-import FilmsDetails from './filmsDetails';
+import Search from '../components/Search';
 
 function Home() {
     const dispatch = useDispatch();
@@ -11,7 +11,7 @@ function Home() {
 
     // const [navigator, setNavigator] = useState(false);
 
-      const filmsList = useSelector((state) => state.films.data);
+    //   const filmsList = useSelector((state) => state.films.data);
 
     useEffect(() => {
         dispatch(fetchFilms());
@@ -28,14 +28,16 @@ function Home() {
     return(
       <div>
           <h1>STUDIO GHIBLI</h1>
-          <FilmsDetails />
-            {filmsList.map(({ id, title, image }) => (
+          <Search />
+          {/* <div> */}
+            {/* {filmsList.map(({ id, title, image }) => (
             <div key={ id }>
               <img src={ image } alt={ `Movie: ${ title }` } />
               <p>{ title }</p>
               <button>See more</button>
             </div>
-          ))}
+          ))} */}
+          {/* </div> */}
       </div>
     );
 };

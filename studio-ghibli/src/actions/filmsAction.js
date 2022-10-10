@@ -5,9 +5,12 @@ export const REQUEST_SUCESS = 'REQUEST_SUCESS';
 export const REQUEST_FAILURE = 'REQUEST_FAILURE';
 
 export const receiveFilms = (films) => ({ type: REQUEST_SUCESS, films });
-
 export const requestFilms = (loading) => ({ type: REQUEST_LOADING, loading });
-export const errorInRequest = (err) => ({ type: REQUEST_FAILURE, err });
+export const errorInRequestFilms = (err) => ({ type: REQUEST_FAILURE, err });
+
+export const receiveFilmById = ({ film }) => ({ type: REQUEST_SUCESS, film });
+export const requestFilmById = (loading) => ({ type: REQUEST_LOADING, loading });
+export const errorInRequestFilmById = (err) => ({ type: REQUEST_FAILURE, err });
 
 const fetchFilms = () => async (dispatch) => {
   try {
@@ -22,7 +25,22 @@ const fetchFilms = () => async (dispatch) => {
     // const listFilms = await response.json();
   } catch (error) {
     console.error(error);
-    dispatch(errorInRequest(error)); // tá passando aqui
+    dispatch(errorInRequestFilms(error)); // tá passando aqui
+  }
+};
+
+export const fetchFilmsById = () => async (dispatch) => { // Ver se funciona
+  try {
+    dispatch(requestFilmById(true));
+    const film = await API.get('/films/<id>');
+
+    console.log(film);
+
+    return dispatch(receiveFilmById(film));
+
+  } catch (error) {
+    console.error(error);
+    dispatch(errorInRequestFilmById(error));
   }
 };
 
