@@ -1,8 +1,5 @@
 import API from "./baseURL";
-
-export const REQUEST_LOADING = 'REQUEST_LOADING';
-export const REQUEST_SUCESS = 'REQUEST_SUCESS';
-export const REQUEST_FAILURE = 'REQUEST_FAILURE';
+import { REQUEST_LOADING, REQUEST_SUCESS, REQUEST_FAILURE } from './typesActions';
 
 export const receivePeoples = (peoples) => ({ type: REQUEST_SUCESS, peoples });
 export const requestPeoples = (loading) => ({ type: REQUEST_LOADING, loading });
@@ -15,7 +12,9 @@ const fetchPeople = () => async (dispatch) => {
 
     console.log(listPeoples.data);
 
-    return dispatch(receivePeoples(listPeoples.data));
+    dispatch(receivePeoples(listPeoples.data));
+
+    return listPeoples.data;
 
   } catch (error) {
     console.error(error);

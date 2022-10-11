@@ -1,23 +1,20 @@
 import API from "./baseURL";
-
-export const REQUEST_LOADING = 'REQUEST_LOADING';
-export const REQUEST_SUCESS = 'REQUEST_SUCESS';
-export const REQUEST_FAILURE = 'REQUEST_FAILURE';
+import { REQUEST_LOADING, REQUEST_SUCESS, REQUEST_FAILURE } from './typesActions';
 
 export const receiveFilms = (films) => ({ type: REQUEST_SUCESS, films });
 export const requestFilms = (loading) => ({ type: REQUEST_LOADING, loading });
 export const errorInRequestFilms = (err) => ({ type: REQUEST_FAILURE, err });
 
-export const receiveFilmById = ({ film }) => ({ type: REQUEST_SUCESS, film });
-export const requestFilmById = (loading) => ({ type: REQUEST_LOADING, loading });
-export const errorInRequestFilmById = (err) => ({ type: REQUEST_FAILURE, err });
+// export const receiveFilmById = ({ film }) => ({ type: REQUEST_SUCESS, film });
+// export const requestFilmById = (loading) => ({ type: REQUEST_LOADING, loading });
+// export const errorInRequestFilmById = (err) => ({ type: REQUEST_FAILURE, err });
 
 const fetchFilms = () => async (dispatch) => {
   try {
     dispatch(requestFilms(true));
     const listFilms = await API.get('/films');
 
-    console.log(listFilms.data); // console vindo certim qnd só passa o <Home />, há um array de 22 objetos/filmes
+    console.log(listFilms.data);
 
     return dispatch(receiveFilms(listFilms.data));
 
@@ -25,23 +22,23 @@ const fetchFilms = () => async (dispatch) => {
     // const listFilms = await response.json();
   } catch (error) {
     console.error(error);
-    dispatch(errorInRequestFilms(error)); // tá passando aqui
+    dispatch(errorInRequestFilms(error));
   }
 };
 
-export const fetchFilmsById = () => async (dispatch) => { // Ver se funciona
-  try {
-    dispatch(requestFilmById(true));
-    const film = await API.get('/films/<id>');
+// export const fetchFilmsById = () => async (dispatch) => { // Ver se funciona
+//   try {
+//     dispatch(requestFilmById(true));
+//     const film = await API.get('/films/<id>');
 
-    console.log(film);
+//     console.log(film);
 
-    return dispatch(receiveFilmById(film));
+//     return dispatch(receiveFilmById(film));
 
-  } catch (error) {
-    console.error(error);
-    dispatch(errorInRequestFilmById(error));
-  }
-};
+//   } catch (error) {
+//     console.error(error);
+//     dispatch(errorInRequestFilmById(error));
+//   }
+// };
 
 export default fetchFilms;

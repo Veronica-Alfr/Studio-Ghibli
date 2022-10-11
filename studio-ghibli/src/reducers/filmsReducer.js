@@ -1,4 +1,4 @@
-import { REQUEST_LOADING, REQUEST_SUCESS, REQUEST_FAILURE } from '../actions/filmsAction';
+import { REQUEST_LOADING, REQUEST_SUCESS, REQUEST_FAILURE } from '../actions/typesActions';
 
 const INITIAL_STATE = {
   data: [],
