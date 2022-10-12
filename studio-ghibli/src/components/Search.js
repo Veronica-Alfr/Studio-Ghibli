@@ -1,72 +1,74 @@
-import { useState, useCallback, useEffect } from 'react';
+import API from '../actions/baseURL';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import fetchFilms from '../actions/filmsAction';
 import fetchPeople from '../actions/peoplesAction';
+
+// a requisição de personagens pode ser feita dentro dos reducers, seria uma boa nesse caso reduxToolkit
 
 function Search() {
     const dispatch = useDispatch();
 
     const [inputValue, setInputValue] = useState('');
-    // const [allFilms, setAllFilms] = useState([]);
-    // const [allFilmsCopy, setAllFilmsCopy] = useState([]);
-    // const [peoples, setPeoples] = useState([]);
-    // console.log(peoples);
+    const [filmsCopy, setFilmsCopy] = useState([]);
+    const [peoples, setPeoples] = useState([]);
+    const [peoplesCopy, setPeoplesCopy] = useState([]);
+    const [locationCopy, setLocationCopy] = useState([]);
+
     const handleInputValue = ({ target }) => setInputValue(target.value);
 
     const filmsList = useSelector((state) => {
         console.log(state);
-        console.log(state.films.data);
         return state.films.data;
     });
 
-
-    useSelector((state) => {
-        console.log(state.peoples.data);
-        console.log(state);
-        return state.peoples;
-    });
+    // useSelector((state) => {
+    //     console.log(state);
+    //     console.log(state.peoples.data);
+    //     return state.peoples.data;
+    // });
 
     useEffect(() => {
-       dispatch(fetchFilms());
+        dispatch(fetchFilms());
+        dispatch(fetchPeople());
 
-        // const searchFilms = () => {
-        //     if (inputValue.length === 0) {
-        //         setAllFilmsCopy(filmsList);
-        //     }
-        //         const filterMovies = filmsList.filter(({ title }) => title.toLowerCase().includes(inputValue.toLowerCase()));
-        //         // fazer o dispatch de filterMovies ?
-        //         setAllFilmsCopy(filterMovies);
-        // }
-        // searchFilms();
+    //    const getCharacters = async () => {
+    //         const listPeoples = await API.get('/people');
+    //         setPeoples(listPeoples);
+    //    };
 
-    }, [dispatch]);
+    //    getCharacters();
 
-   const peoples = async () => {
-        const peoplesList = await fetchPeople()(dispatch);
-        console.log(peoplesList);
-   }
-   console.log(peoples());
+    }, []);
 
     // realizar filtro por peoples também, realizando comparação pelo id de films
+    //    const filterMoviesByTitle = moviesList.filter(({ title }) => title.toLowerCase().includes(inputValue.toLowerCase()));
+    //    const filterMoviesByCharacter = charactersList.filter(({ name }) => name.toLowerCase().includes(inputValue.toLowerCase()));
     
     const searchFilms = () => {
-        if (inputValue.length === 0) {
-            return filmsList;
-        }
+    //    const moviesList = [...filmsList];
+    //    const charactersList = [...peoplesList];
+    // usar state peoples para filtro
+
+        if (inputValue.length > 0) {
             const filterMovies = filmsList.filter(({ title }) => title.toLowerCase().includes(inputValue.toLowerCase()));
-            // fazer o dispatch de filterMovies ?
+           
             return filterMovies;
+        }
+        return filmsList;
     }
+
+    // console.log(peoples); // funciona, améeeem
 
     return(
         <div>
-            <h2>Search</h2>
+            <h2>Movies</h2>
             <input type='search'
             placeholder='Search'
             onChange={ handleInputValue }
           />
            <div>
-            {searchFilms().map(({ id, title, image }) => (
+            {searchFilms() && searchFilms().map(({ id, title, image }) => (
             <div key={ id }>
               <img src={ image } alt={ `Movie: ${ title }` } />
               <p>{ title }</p>

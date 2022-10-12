@@ -1,7 +1,7 @@
 import API from "./baseURL";
-import { REQUEST_LOADING, REQUEST_SUCESS, REQUEST_FAILURE } from './typesActions';
+import { REQUEST_LOADING, REQUEST_SUCESS_FILMS, REQUEST_FAILURE } from './typesActions';
 
-export const receiveFilms = (films) => ({ type: REQUEST_SUCESS, films });
+export const receiveFilms = (films) => ({ type: REQUEST_SUCESS_FILMS, films });
 export const requestFilms = (loading) => ({ type: REQUEST_LOADING, loading });
 export const errorInRequestFilms = (err) => ({ type: REQUEST_FAILURE, err });
 
