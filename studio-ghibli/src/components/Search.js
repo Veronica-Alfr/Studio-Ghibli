@@ -1,8 +1,8 @@
-import API from '../actions/baseURL';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import fetchFilms from '../actions/filmsAction';
-import fetchPeople from '../actions/peoplesAction';
+import API from '../actions/baseURL';
+import { fetchFilms, fetchFilmsById } from '../actions/filmsAction';
+import { fetchPeople } from '../actions/peoplesAction';
 
 // a requisição de personagens pode ser feita dentro dos reducers, seria uma boa nesse caso reduxToolkit
 
@@ -10,10 +10,7 @@ function Search() {
     const dispatch = useDispatch();
 
     const [inputValue, setInputValue] = useState('');
-    const [filmsCopy, setFilmsCopy] = useState([]);
-    const [peoples, setPeoples] = useState([]);
-    const [peoplesCopy, setPeoplesCopy] = useState([]);
-    const [locationCopy, setLocationCopy] = useState([]);
+    // const [idMovie, setIdMovie] = useState('');
 
     const handleInputValue = ({ target }) => setInputValue(target.value);
 
@@ -22,43 +19,45 @@ function Search() {
         return state.films.data;
     });
 
-    // useSelector((state) => {
-    //     console.log(state);
-    //     console.log(state.peoples.data);
-    //     return state.peoples.data;
-    // });
+    const peoplesList = useSelector((state) => {
+        return state.peoples.data;
+    });
 
     useEffect(() => {
         dispatch(fetchFilms());
         dispatch(fetchPeople());
-
-    //    const getCharacters = async () => {
-    //         const listPeoples = await API.get('/people');
-    //         setPeoples(listPeoples);
-    //    };
-
-    //    getCharacters();
-
     }, []);
-
-    // realizar filtro por peoples também, realizando comparação pelo id de films
-    //    const filterMoviesByTitle = moviesList.filter(({ title }) => title.toLowerCase().includes(inputValue.toLowerCase()));
-    //    const filterMoviesByCharacter = charactersList.filter(({ name }) => name.toLowerCase().includes(inputValue.toLowerCase()));
     
-    const searchFilms = () => {
-    //    const moviesList = [...filmsList];
-    //    const charactersList = [...peoplesList];
-    // usar state peoples para filtro
-
-        if (inputValue.length > 0) {
-            const filterMovies = filmsList.filter(({ title }) => title.toLowerCase().includes(inputValue.toLowerCase()));
-           
-            return filterMovies;
+    const filmById = async (id) => {
+        try {
+            const movieById = await API.get(`/films/${id}`);
+            return movieById.data;
+        } catch(err) {
+            console.log(err);
         }
-        return filmsList;
     }
 
-    // console.log(peoples); // funciona, améeeem
+    const searchFilms = () => {
+       const moviesList = [...filmsList];
+       const charactersList = [...peoplesList];
+
+        if (inputValue.length > 0) {
+            return moviesList.filter((movie) => {
+                const movieByName = movie.title.toLowerCase().includes(inputValue.toLowerCase());
+                return charactersList.find((character) => {
+                    const movieByCharacter = character.name.toLowerCase().includes(inputValue.toLowerCase());
+                    const filmIdByUrlBreaked = character.films[0].split('/', 5);
+                    const filmId = filmIdByUrlBreaked[4]
+                    if (movieByCharacter && movie.id === filmId) {
+                        return filmById(filmIdByUrlBreaked[4]);
+                        // Mas e se fizer uma função que intercepta o id, passa na chamada da função do fetch e dps dispara a função?
+                    }
+                    return movieByName;
+                })
+            });
+        }
+        return moviesList;
+    }
 
     return(
         <div>

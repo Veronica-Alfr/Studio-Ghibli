@@ -1,11 +1,11 @@
 import API from "./baseURL";
-import { REQUEST_LOADING, REQUEST_SUCESS_PEOPLE, REQUEST_FAILURE } from './typesActions';
+import { REQUEST_LOADING_PEOPLE, REQUEST_SUCESS_PEOPLE, REQUEST_FAILURE_PEOPLE } from './typesActions';
 
 export const receivePeoples = (peoples) => ({ type: REQUEST_SUCESS_PEOPLE, peoples });
-export const requestPeoples = (loading) => ({ type: REQUEST_LOADING, loading });
-export const errorInRequestPeoples = (err) => ({ type: REQUEST_FAILURE, err });
+export const requestPeoples = (loading) => ({ type: REQUEST_LOADING_PEOPLE, loading });
+export const errorInRequestPeoples = (err) => ({ type: REQUEST_FAILURE_PEOPLE, err });
 
-const fetchPeople = () => async (dispatch) => {
+export const fetchPeople = () => async (dispatch) => {
   try {
     dispatch(requestPeoples(true));
     const listPeoples = await API.get('/people');
@@ -19,5 +19,3 @@ const fetchPeople = () => async (dispatch) => {
     dispatch(errorInRequestPeoples(error));
   }
 };
-
-export default fetchPeople;
