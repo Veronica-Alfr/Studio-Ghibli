@@ -1,11 +1,8 @@
 <main>
-  <div>
     
     <h1 align="center">Studio Ghibli</h1>
     
     ![image](https://wallpaperaccess.com/full/42613.jpg)
-    
-  </div>
   
    Esse projeto conta com o consumo da API do Studio Ghibli que mostra os filmes atráves de filtros por título, personagem ou localização.</p>
 
