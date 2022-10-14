@@ -12,6 +12,7 @@
 <h3>Como rodar a aplicação</h3>
 
   <div background-color='gray'>
+
     1° -> Clone o Repositório da branch 'dev/veronica-alves'.
     
     2° -> Rode npm install para instalar as depedências.
