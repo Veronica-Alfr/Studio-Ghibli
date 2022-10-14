@@ -1,26 +1,13 @@
 <main>
-    <h1 align="center">Studio Ghibli</h1>
-  
-   Esse projeto conta com o consumo da API do Studio Ghibli que mostra os filmes atráves de filtros por título, personagem ou localização.</p>
+  <h1 align="center">Studio Ghibli</h1>
+
+  <img src="./Project-Img-Studio-Ghibli.jpeg" alt="My Project"/>
+
+  <p>Esse projeto conta com o consumo da API do Studio Ghibli que mostra quais os filmes atráves de filtros por título, personagem ou localização.</p>
 
   <h3>Status do Projeto</h3>
   
  🚧 Em Progresso 🚀
- 
- <div background-color='gray'>
-  
-    const desenvolverMais = (aprendizado) => {
-      return [
-        'Filtros Múltiplos',
-        'Refatorar para TS',
-        'Usar Docker',
-        'Fazer testes com Cypress',
-        'Adicionar botão para mais detalhes sobre o filme',
-        'Tudo isso para meu próprio aprendizado 💻🚀'
-      ]
-    }
-  
- </div>
 
 <h3>Como rodar a aplicação 💻</h3>
 
