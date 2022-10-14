@@ -1,5 +1,6 @@
-import API from "./baseURL";
-import { REQUEST_LOADING_FILMS, REQUEST_SUCESS_FILMS, REQUEST_FAILURE_FILMS } from './typesActions';
+import API from './baseURL';
+import { REQUEST_LOADING_FILMS, REQUEST_SUCESS_FILMS,
+  REQUEST_FAILURE_FILMS } from './typesActions';
 
 export const receiveFilms = (films) => ({ type: REQUEST_SUCESS_FILMS, films });
 export const requestFilms = (loading) => ({ type: REQUEST_LOADING_FILMS, loading });
@@ -13,7 +14,6 @@ export const fetchFilms = () => async (dispatch) => {
     console.log(listFilms.data);
 
     return dispatch(receiveFilms(listFilms.data));
-
   } catch (error) {
     console.error(error);
     dispatch(errorInRequestFilms(error));

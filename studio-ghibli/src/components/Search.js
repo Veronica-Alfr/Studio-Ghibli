@@ -1,101 +1,107 @@
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable array-callback-return */
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { AiTwotoneStar } from 'react-icons/ai';
 import { fetchFilms } from '../actions/filmsAction';
 import { fetchLocations } from '../actions/locationAction';
 import { fetchPeople } from '../actions/peoplesAction';
-import { AiTwotoneStar } from  "react-icons/ai";
 
 function Search() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const [inputValue, setInputValue] = useState('');
-    const [movies, setMovies] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [movies, setMovies] = useState([]);
 
-    const handleInputValue = ({ target }) => setInputValue(target.value);
+  const handleInputValue = ({ target }) => setInputValue(target.value);
 
-    const filmsList = useSelector((state) => {
-        return state.films.data;
-    });
-    
-    const peoplesList = useSelector((state) => {
-        return state.peoples.data;
-    });
-    
-    const locationList = useSelector((state) => {
-        return state.locations.data;
-    });
+  const filmsList = useSelector((state) => state.films.data);
 
-    useEffect(() => {
-        searchFilms();
-    }, [inputValue]);
+  const peoplesList = useSelector((state) => state.peoples.data);
 
-    useEffect(() => {
-        setMovies(filmsList);
-    }, [filmsList]);
+  const locationList = useSelector((state) => state.locations.data);
 
-    useEffect(() => {
-        dispatch(fetchFilms());
-        dispatch(fetchPeople());
-        dispatch(fetchLocations());
+  useEffect(() => {
+    setMovies(filmsList);
+  }, [filmsList]);
 
-    }, []);
+  useEffect(() => {
+    dispatch(fetchFilms());
+    dispatch(fetchPeople());
+    dispatch(fetchLocations());
+  }, []);
 
-    const textIncludes = (text) => {
-        return text.toLowerCase().includes(inputValue.toLowerCase());
-    };
+  const textIncludes = (text) => text.toLowerCase().includes(inputValue.toLowerCase());
 
-    const searchFilms = () => {
-        if (inputValue.length > 0) {
-            const moviesFilter = filmsList.filter((movie) => {
-                if (textIncludes(movie.title)) return true;
-                
-                const movieByCharacter = peoplesList.find((people) => {
-                    const filmIdByUrlPeople = people.films[0].split('/', 5);
-                    const filmId = filmIdByUrlPeople[4];
+  const five = 5;
 
-                    if (movie.id === filmId) return textIncludes(people.name);
-                });
+  const searchFilms = () => {
+    if (inputValue.length > 0) {
+      const moviesFilter = filmsList.filter((movie) => {
+        if (textIncludes(movie.title)) return true;
 
-                if (!!movieByCharacter) return true;
+        const movieByCharacter = peoplesList.find((people) => {
+          try {
+            const filmIdByUrlPeople = people.films[0].split('/', five);
+            const filmId = filmIdByUrlPeople[4];
 
-                const movieByLocation = locationList.find((location) => {
-                    const filmIdByUrlLocation = location.films[0].split('/', 5);
-                    const idFilm = filmIdByUrlLocation[4];
+            if (movie.id === filmId) return textIncludes(people.name);
+          } catch (err) {
+            return console.log(err);
+          }
+        });
 
-                    if (movie.id === idFilm) return textIncludes(location.name);
-                });
+        if (movieByCharacter) return true;
 
-                console.log('Localização ', movieByLocation);
+        const movieByLocation = locationList.find((location) => {
+          try {
+            const filmIdByUrlLocation = location.films[0].split('/', five);
+            const idFilm = filmIdByUrlLocation[4];
 
-                return !!movieByLocation;
-            });
-           setMovies(moviesFilter);
-        };
-    };
+            if (movie.id === idFilm) return textIncludes(location.name);
+          } catch (err) {
+            return console.log(err);
+          }
+        });
 
-    return(
-        <main>
-            <header>
-                <h1>STUDIO GHIBLI</h1>
-                <input type='search'
-                placeholder='Search for title movie, author name or animation location'
-                onChange={ handleInputValue }
-                />
-            </header>
-           <div className='container-films'>
-                {movies.length > 0 && movies.map(({ id, title, image, rt_score }) => (
-                <div key={ id } className='card-film'>
-                    <img src={ image } alt={ `Movie: ${ title }` } />
-                    <div className='text'>
-                        <AiTwotoneStar className='star'/>
-                        <p>{ Number(rt_score/10).toFixed(1) }</p>
-                        <p>{ title }</p>
-                    </div>
-                </div>
-                ))}
+        console.log('Localização ', movieByLocation);
+
+        return !!movieByLocation;
+      });
+      setMovies(moviesFilter);
+    }
+  };
+
+  useEffect(() => {
+    searchFilms();
+  }, [inputValue]);
+
+  const ten = 10;
+
+  return (
+    <main>
+      <header>
+        <h1>STUDIO GHIBLI</h1>
+        <input
+          type="search"
+          placeholder="Search for title movie, author name or animation location"
+          onChange={ handleInputValue }
+        />
+      </header>
+      <div className="container-films">
+        {movies.length > 0 && movies.map(({ id, title, image, rt_score: score }) => (
+          <div key={ id } className="card-film">
+            <img src={ image } alt={ `Movie: ${title}` } />
+            <div className="text">
+              <AiTwotoneStar className="star" />
+              <p>{ Number(score / ten).toFixed(1) }</p>
+              <p>{ title }</p>
+            </div>
           </div>
-        </main>
-    )
-};
+        ))}
+      </div>
+    </main>
+  );
+}
 
 export default Search;
