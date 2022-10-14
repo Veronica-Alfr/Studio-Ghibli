@@ -8,6 +8,20 @@
   <h3>Status do Projeto</h3>
   
  🚧 Em Progresso 🚀
+ 
+ <div>
+  
+     const desenvolverMais (aprendizado) => {
+      return [
+        'Criar múltiplos filtros',
+        'Utilizar Docker',
+        'Criar testes com Cypress',
+        'Adicionar funcionalidade para mais detalhes do filme',
+        'Tudo isso para meu aprendizado 💻🚀'
+      ]
+    }
+  
+ </div>
 
 <h3>Como rodar a aplicação 💻</h3>
 
