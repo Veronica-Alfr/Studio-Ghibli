@@ -2,7 +2,7 @@
   <div>
     
     <h1 align="center">Studio Ghibli</h1>
-    <img src='![image](https://user-images.githubusercontent.com/71521483/195944355-2d0ec227-5df0-42f3-963a-c75a9a8b07ce.png)'/>
+    <img src='https://user-images.githubusercontent.com/71521483/195944355-2d0ec227-5df0-42f3-963a-c75a9a8b07ce.png'/>
     
   </div>
   
