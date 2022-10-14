@@ -9,7 +9,7 @@
   
  🚧 Em Progresso 🚀
 
-<h3>Como rodar a aplicação</h3>
+<h3>Como rodar a aplicação 💻</h3>
 
   <div background-color='gray'>
 
@@ -22,11 +22,11 @@
 
   <h3>🛠 Tecnologias</h3>
   
-  -- Colocar link que redireciona para elas
+  <p>As tecnologias usadas foram React com JS, SCSS, React-Icons, Eslint.</p>
 
 ### Autor
 
-  Verônica Agda Alves Silva
+  Verônica Alves
 
 ### Licença
 </main>
