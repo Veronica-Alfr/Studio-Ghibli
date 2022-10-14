@@ -7,6 +7,7 @@
  🚧 Em Progresso 🚀
  
  <div background-color='gray'>
+  
     const desenvolverMais = (aprendizado) => {
       return [
         'Mais Filtros',
@@ -17,6 +18,7 @@
         'Tudo isso para meu próprio aprendizado 💻🚀'
       ]
     }
+  
  </div>
 
 <h3>Como rodar a aplicação 💻</h3>
