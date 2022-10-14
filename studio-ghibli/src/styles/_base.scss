@@ -5,25 +5,15 @@
 
 main {
     background-image: url('./imagens/ghibli-img-bg.jpg');
+    background-size: contain;
 }
 
 header {
     height: 6em;
     background-color: $bg-dark-blue;
-    box-shadow: 0 1em 5em ;
+    @include elevation(5em);
     display: flex;
     justify-content: space-around;
-}
-
-input {
-    height: 2.5em;
-    width: 30em;
-    border-radius: 1em;
-    margin-top: 2.3em;
-}
-
-input::placeholder {
-    font-family: $roboto;
 }
 
 h1 {

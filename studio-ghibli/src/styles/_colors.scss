@@ -4,3 +4,7 @@ $bg-dark-blue: #0b1126;
 $word-white: #ffff;
 $roboto: 'Roboto', sans-serif;
 $bg-blue-light: #dff1f7;
+
+@mixin elevation($value) {
+    box-shadow: 0 1em $value;
+}
