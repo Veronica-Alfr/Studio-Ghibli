@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import API from '../actions/baseURL';
-import { fetchFilms, fetchFilmsById } from '../actions/filmsAction';
+import { fetchFilms } from '../actions/filmsAction';
+import { fetchLocations } from '../actions/locationAction';
 import { fetchPeople } from '../actions/peoplesAction';
 
 // a requisição de personagens pode ser feita dentro dos reducers, seria uma boa nesse caso reduxToolkit
@@ -10,64 +11,79 @@ function Search() {
     const dispatch = useDispatch();
 
     const [inputValue, setInputValue] = useState('');
-    // const [idMovie, setIdMovie] = useState('');
+    const [movies, setMovies] = useState([]);
 
     const handleInputValue = ({ target }) => setInputValue(target.value);
 
     const filmsList = useSelector((state) => {
-        console.log(state);
         return state.films.data;
     });
-
+    
     const peoplesList = useSelector((state) => {
         return state.peoples.data;
     });
+    
+    const locationList = useSelector((state) => {
+        return state.locations.data;
+    });
+
+    useEffect(() => {
+        searchFilms();
+    }, [inputValue]);
+
+    useEffect(() => {
+        setMovies(filmsList);
+    }, [filmsList]);
 
     useEffect(() => {
         dispatch(fetchFilms());
         dispatch(fetchPeople());
+        dispatch(fetchLocations());
+
     }, []);
-    
-    const filmById = async (id) => {
-        try {
-            const movieById = await API.get(`/films/${id}`);
-            return movieById.data;
-        } catch(err) {
-            console.log(err);
-        }
-    }
+
+    const textIncludes = (text) => {
+        return text.toLowerCase().includes(inputValue.toLowerCase());
+    };
 
     const searchFilms = () => {
-       const moviesList = [...filmsList];
-       const charactersList = [...peoplesList];
-
         if (inputValue.length > 0) {
-            return moviesList.filter((movie) => {
-                const movieByName = movie.title.toLowerCase().includes(inputValue.toLowerCase());
-                return charactersList.find((character) => {
-                    const movieByCharacter = character.name.toLowerCase().includes(inputValue.toLowerCase());
-                    const filmIdByUrlBreaked = character.films[0].split('/', 5);
-                    const filmId = filmIdByUrlBreaked[4]
-                    if (movieByCharacter && movie.id === filmId) {
-                        return filmById(filmIdByUrlBreaked[4]);
-                        // Mas e se fizer uma função que intercepta o id, passa na chamada da função do fetch e dps dispara a função?
-                    }
-                    return movieByName;
-                })
+            const moviesFilter = filmsList.filter((movie) => {
+                if (textIncludes(movie.title)) return true;
+                
+                const movieByCharacter = peoplesList.find((people) => {
+                    const filmIdByUrlPeople = people.films[0].split('/', 5);
+                    const filmId = filmIdByUrlPeople[4];
+
+                    if (movie.id === filmId) return textIncludes(people.name);
+                });
+
+                if (!!movieByCharacter) return true;
+
+                const movieByLocation = locationList.find((location) => {
+                    const filmIdByUrlLocation = location.films[0].split('/', 5);
+                    const idFilm = filmIdByUrlLocation[4];
+
+                    if (movie.id === idFilm) return textIncludes(location.name);
+                });
+
+                console.log('Localização ', movieByLocation);
+
+                return !!movieByLocation;
             });
-        }
-        return moviesList;
-    }
+           setMovies(moviesFilter);
+        };
+    };
 
     return(
         <div>
             <h2>Movies</h2>
             <input type='search'
-            placeholder='Search'
+            placeholder='Search for title movie, author name or animation location'
             onChange={ handleInputValue }
           />
            <div>
-            {searchFilms() && searchFilms().map(({ id, title, image }) => (
+            {movies.length > 0 && movies.map(({ id, title, image }) => (
             <div key={ id }>
               <img src={ image } alt={ `Movie: ${ title }` } />
               <p>{ title }</p>

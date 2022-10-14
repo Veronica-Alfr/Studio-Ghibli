@@ -9,7 +9,6 @@ export const fetchPeople = () => async (dispatch) => {
   try {
     dispatch(requestPeoples(true));
     const listPeoples = await API.get('/people');
-    // puxar a função pra cá e fazer o dispatch com useDispatch aqui?
     console.log(listPeoples.data);
 
     return dispatch(receivePeoples(listPeoples.data));
