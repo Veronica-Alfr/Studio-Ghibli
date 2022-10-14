@@ -12,11 +12,11 @@
 <h3>Como rodar a aplicação</h3>
 
   <div background-color='gray'>
-    <p>Clone o Repositório da branch 'dev/veronica-alves'.</p>
+    1° -> Clone o Repositório da branch 'dev/veronica-alves'.
     
-    <p>Rode npm install para instalar as depedências.</p>
+    2° -> Rode npm install para instalar as depedências.
     
-    <p>Agora é só rodar o comando npm start para visualizar o projeto!</p>
+    3° -> Agora é só rodar o comando npm start para visualizar o projeto!
   </div>
 
   <h3>🛠 Tecnologias</h3>
