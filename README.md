@@ -28,7 +28,7 @@
 
   Verônica Alves
 
-  📜<h3>Licença</h3>
+  <h3>📜 Licença</h3>
     <details>
 
       TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
