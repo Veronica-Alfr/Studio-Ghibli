@@ -1,8 +1,5 @@
 <main>
-    
     <h1 align="center">Studio Ghibli</h1>
-    
-    
   
    Esse projeto conta com o consumo da API do Studio Ghibli que mostra os filmes atráves de filtros por título, personagem ou localização.</p>
 
