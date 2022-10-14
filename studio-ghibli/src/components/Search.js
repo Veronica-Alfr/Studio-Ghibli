@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchFilms } from '../actions/filmsAction';
 import { fetchLocations } from '../actions/locationAction';
 import { fetchPeople } from '../actions/peoplesAction';
+import { AiTwotoneStar } from  "react-icons/ai";
 
 function Search() {
     const dispatch = useDispatch();
@@ -86,7 +87,8 @@ function Search() {
                 <div key={ id } className='card-film'>
                     <img src={ image } alt={ `Movie: ${ title }` } />
                     <div className='text'>
-                        <p>{ Number(rt_score/10) }</p>
+                        <AiTwotoneStar className='star'/>
+                        <p>{ Number(rt_score/10).toFixed(1) }</p>
                         <p>{ title }</p>
                     </div>
                 </div>
