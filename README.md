@@ -11,7 +11,7 @@
   
     const desenvolverMais = (aprendizado) => {
       return [
-        'Mais Filtros',
+        'Filtros Múltiplos',
         'Refatorar para TS',
         'Usar Docker',
         'Fazer testes com Cypress',
