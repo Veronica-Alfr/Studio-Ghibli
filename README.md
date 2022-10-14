@@ -3,7 +3,7 @@
     
     <h1 align="center">Studio Ghibli</h1>
     
-    <img src='https://wallpaperaccess.com/full/42613.jpg'/>
+    ![image](https://wallpaperaccess.com/full/42613.jpg)
     
   </div>
   
