@@ -1,0 +1,29 @@
+main {
+    .container-films {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+        .card-film {
+            padding: 1.2em;
+            margin: 1em;
+            box-shadow: 0 1em 4em ;
+            background-color: $bg-blue-light;
+
+            img {
+                width: 20em;
+            }
+
+            p {
+                font-family: $roboto;
+                padding: 0.5em;
+                margin-top: 0.5em;
+            }
+
+            .text {
+                display: flex;
+                justify-content: center;
+            }
+        }
+}

@@ -18,10 +18,7 @@ function Home() {
     // }
 
     return(
-      <div>
-          <h1>STUDIO GHIBLI</h1>
-          <Search />
-      </div>
+      <Search />
     );
 };
 

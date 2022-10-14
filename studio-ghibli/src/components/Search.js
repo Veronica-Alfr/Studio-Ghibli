@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import API from '../actions/baseURL';
 import { fetchFilms } from '../actions/filmsAction';
 import { fetchLocations } from '../actions/locationAction';
 import { fetchPeople } from '../actions/peoplesAction';
-
-// a requisição de personagens pode ser feita dentro dos reducers, seria uma boa nesse caso reduxToolkit
 
 function Search() {
     const dispatch = useDispatch();
@@ -76,22 +73,26 @@ function Search() {
     };
 
     return(
-        <div>
-            <h2>Movies</h2>
-            <input type='search'
-            placeholder='Search for title movie, author name or animation location'
-            onChange={ handleInputValue }
-          />
-           <div>
-            {movies.length > 0 && movies.map(({ id, title, image }) => (
-            <div key={ id }>
-              <img src={ image } alt={ `Movie: ${ title }` } />
-              <p>{ title }</p>
-              <button>See more</button>
-            </div>
-          ))}
+        <main>
+            <header>
+                <h1>STUDIO GHIBLI</h1>
+                <input type='search'
+                placeholder='Search for title movie, author name or animation location'
+                onChange={ handleInputValue }
+                />
+            </header>
+           <div className='container-films'>
+                {movies.length > 0 && movies.map(({ id, title, image, rt_score }) => (
+                <div key={ id } className='card-film'>
+                    <img src={ image } alt={ `Movie: ${ title }` } />
+                    <div className='text'>
+                        <p>{ Number(rt_score/10) }</p>
+                        <p>{ title }</p>
+                    </div>
+                </div>
+                ))}
           </div>
-        </div>
+        </main>
     )
 };
 
