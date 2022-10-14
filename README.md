@@ -1,5 +1,11 @@
 <main>
-  <h1 align="center">Studio Ghibli</h1>
+  <div>
+    
+    <h1 align="center">Studio Ghibli</h1>
+    <img src='![image](https://user-images.githubusercontent.com/71521483/195944355-2d0ec227-5df0-42f3-963a-c75a9a8b07ce.png)'/>
+    
+  </div>
+  
    Esse projeto conta com o consumo da API do Studio Ghibli que mostra os filmes atráves de filtros por título, personagem ou localização.</p>
 
   <h3>Status do Projeto</h3>
