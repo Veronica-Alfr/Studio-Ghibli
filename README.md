@@ -7,20 +7,24 @@
 
   <h3>Status do Projeto</h3>
   
-  Em Progresso 🚀
+ 🚧 Em Progresso 🚀
 
 <h3>Como rodar a aplicação</h3>
 
   <div background-color='gray'>
-    <p>Clone o Repositório da branch 'dev/veronica-alves'</p>
+    <p><strong>Clone</strong> o Repositório da branch 'dev/veronica-alves'.</p>
+    
+    <p>Rode <em>npm install</em> para instalar as depedências.</p>
+    
+    <p>Agora é só rodar o comando <em>npm start</em> para visualizar o projeto!</p>
   </div>
 
-<h3>🛠 Tecnologias</h3>### 
+  <h3>🛠 Tecnologias</h3>### 
 -- Colocar link que redireciona para elas
 
 ### Autor
 
-Verônica Agda Alves Silva
+  Verônica Agda Alves Silva
 
 ### Licença
 </main>
