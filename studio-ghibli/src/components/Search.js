@@ -1,5 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable array-callback-return */
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AiTwotoneStar } from 'react-icons/ai';
@@ -33,47 +31,68 @@ function Search() {
 
   const textIncludes = (text) => text.toLowerCase().includes(inputValue.toLowerCase());
 
+  const searchFilmsByTitle = () => {
+    const moviesFilterByTitle = filmsList.filter((movie) => textIncludes(movie.title));
+    return moviesFilterByTitle;
+  };
+
   const five = 5;
 
-  const searchFilms = () => {
-    if (inputValue.length > 0) {
-      const moviesFilter = filmsList.filter((movie) => {
-        if (textIncludes(movie.title)) return true;
+  const searchFilmsByPeople = () => {
+    const moviesFilterByCharacters = filmsList.filter((movie) => {
+      const moviesByPeoples = peoplesList.find((people) => {
+        const filmIdByUrlPeople = people.films[0].split('/', five);
+        const filmId = filmIdByUrlPeople[4];
 
-        const movieByCharacter = peoplesList.find((people) => {
-          try {
-            const filmIdByUrlPeople = people.films[0].split('/', five);
-            const filmId = filmIdByUrlPeople[4];
-
-            if (movie.id === filmId) return textIncludes(people.name);
-          } catch (err) {
-            return console.log(err);
-          }
-        });
-
-        if (movieByCharacter) return true;
-
-        const movieByLocation = locationList.find((location) => {
-          try {
-            const filmIdByUrlLocation = location.films[0].split('/', five);
-            const idFilm = filmIdByUrlLocation[4];
-
-            if (movie.id === idFilm) return textIncludes(location.name);
-          } catch (err) {
-            return console.log(err);
-          }
-        });
-
-        console.log('Localização ', movieByLocation);
-
-        return !!movieByLocation;
+        if (movie.id === filmId) return textIncludes(people.name);
+        return false;
       });
-      setMovies(moviesFilter);
+      return !!moviesByPeoples;
+    });
+    return moviesFilterByCharacters;
+  };
+
+  const searchFilmsByLocation = () => {
+    const moviesFilterByPlace = filmsList.filter((movie) => {
+      const movieByLocation = locationList.find((location) => {
+        const filmIdByUrlPeople = location.films[0].split('/', five);
+        const filmId = filmIdByUrlPeople[4];
+
+        if (movie.id === filmId) return textIncludes(location.name);
+        return false;
+      });
+      return !!movieByLocation;
+    });
+    return moviesFilterByPlace;
+  };
+
+  const searchMovies = () => {
+    if (inputValue.length > 0) {
+      const filmsByTitle = searchFilmsByTitle();
+      const filmsByPeople = searchFilmsByPeople();
+      const filmsByLocation = searchFilmsByLocation();
+
+      const filmsSearch = [];
+
+      const checkHasFilmsById = (film) => {
+        const hasContainer = filmsSearch.find((search) => film.id === search.id);
+        if (!hasContainer) {
+          filmsSearch.push(film);
+        }
+      };
+
+      filmsByTitle.forEach(checkHasFilmsById);
+
+      filmsByPeople.forEach(checkHasFilmsById);
+
+      filmsByLocation.forEach(checkHasFilmsById);
+
+      setMovies(filmsSearch);
     }
   };
 
   useEffect(() => {
-    searchFilms();
+    searchMovies();
   }, [inputValue]);
 
   const ten = 10;
