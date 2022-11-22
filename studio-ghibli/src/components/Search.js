@@ -38,35 +38,24 @@ function Search() {
 
   const five = 5;
 
-  const searchFilmsByPeople = () => {
-    const moviesFilterByCharacters = filmsList.filter((movie) => {
-      const moviesByPeoples = peoplesList.find((people) => {
-        const filmIdByUrlPeople = people.films[0].split('/', five);
+  const searchFilms = (list) => {
+    const moviesFilter = filmsList.filter((movie) => {
+      const moviesList = list.find((el) => {
+        const filmIdByUrlPeople = el.films[0].split('/', five);
         const filmId = filmIdByUrlPeople[4];
 
-        if (movie.id === filmId) return textIncludes(people.name);
+        if (movie.id === filmId) return textIncludes(el.name);
         return false;
       });
-      return !!moviesByPeoples;
+      return !!moviesList;
     });
-    return moviesFilterByCharacters;
+    return moviesFilter;
   };
 
-  const searchFilmsByLocation = () => {
-    const moviesFilterByPlace = filmsList.filter((movie) => {
-      const movieByLocation = locationList.find((location) => {
-        const filmIdByUrlPeople = location.films[0].split('/', five);
-        const filmId = filmIdByUrlPeople[4];
+  const searchFilmsByPeople = () => searchFilms(peoplesList);
+  const searchFilmsByLocation = () => searchFilms(locationList);
 
-        if (movie.id === filmId) return textIncludes(location.name);
-        return false;
-      });
-      return !!movieByLocation;
-    });
-    return moviesFilterByPlace;
-  };
-
-  const searchMovies = () => {
+  const getMoviesByFilter = () => {
     if (inputValue.length > 0) {
       const filmsByTitle = searchFilmsByTitle();
       const filmsByPeople = searchFilmsByPeople();
@@ -92,7 +81,7 @@ function Search() {
   };
 
   useEffect(() => {
-    searchMovies();
+    getMoviesByFilter();
   }, [inputValue]);
 
   const ten = 10;
