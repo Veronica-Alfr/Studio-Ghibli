@@ -22,7 +22,7 @@
 
   <h3>🛠 Tecnologias</h3>
   
-  <p>As tecnologias usadas foram React com JS, SCSS, React-Icons, Eslint.</p>
+  <p>As tecnologias usadas foram React.js com Redux, SCSS, React-Icons, Eslint.</p>
 
 ### Autor
 
